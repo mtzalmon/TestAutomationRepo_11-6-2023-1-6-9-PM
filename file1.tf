@@ -1,13 +1,14 @@
-{
-  "name": "npm-e2e",
-  "version": "1.0.0",
-  "lockfileVersion": 1,
-  "requires": true,
-  "dependencies": {
-    "minimist": {
-      "version": "1.2.5",
-      "resolved": "https://art.code.pan.run:443/artifactory/api/npm/npm-registry/minimist/-/minimist-1.2.5.tgz",
-      "integrity": "sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw=="
+resource "aws_lambda_function" "analysis_lambda" {
+  filename      = "resources/lambda_function_payload.zip"
+  function_name = "${local.resource_prefix.value}-analysis"
+  role          = "${aws_iam_role.iam_for_lambda.arn}"
+
+  source_code_hash = "${filebase64sha256("resources/lambda_function_payload.zip")}"
+
+  environment {
+    variables = {
+      access_key = "AKIAIOSFODNN7EXAMPLE"
+      secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
     }
   }
 }
